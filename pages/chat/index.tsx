@@ -1,13 +1,20 @@
 import { Icon } from "@iconify/react";
+import Head from "next/head";
 import { Message } from "@/@types/Auth/Text/Message/Message";
+import TipTap from "@/components/editor";
+import { useState } from "react";
 
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>チャット - #general</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </Head>
       {/* component */}
       <div className="flex h-screen font-sans antialiased">
         {/* Sidebar / channel list */}
-        <div className="text-purple-lighter hidden w-64 flex-none bg-gray-900 pb-6 md:block">
+        <div className="hidden lg:w-[25%] md:w-[30%] flex-none bg-gray-900 pb-6 md:block overflow-auto">
           <div className="mb-2 mt-3 flex justify-between px-4 text-white">
             <div className="flex-auto">
               <h1 className="mb-2 truncate text-3xl font-semibold leading-tight">
@@ -96,8 +103,8 @@ export default function Home() {
           <div className="flex-1 overflow-auto bg-gray-800 px-6 py-4">
             {repeatMessage(3)}
           </div>
-          <div className="flex-none bg-gray-800 px-4 pb-6">
-          {/* <Editor /> */}
+          <div className="flex-none bg-gray-800 px-4 pb-4">
+            <TipTap channelName="general"/>
           </div>
         </div>
       </div>
@@ -131,7 +138,7 @@ function repeatMessage(n: number): JSX.Element[] {
       messageBody: "明日はどこへ行きましょうか？",
     },
     {
-      user: "やとー",
+      user: "ほげ",
       userIcon: "/2.png",
       postedAt: "11:46",
       messageBody: "水族館はどうですか？",

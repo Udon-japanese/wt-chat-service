@@ -1,20 +1,27 @@
 import type { AuthText } from "@/@types/Auth/Text/Auth/AuthText";
 import Authenticate from "@/components/Form/Authenticate";
+import Head from "next/head";
+
 const text: AuthText = {
   head: "ログイン",
   subhead: {
     p: "アカウントがありませんか？",
-    link:{
+    link: {
       text: "こちらでサインアップ",
-      href: "/signup"
+      href: "/signup",
     },
   },
   googleText: "ログイン",
-  authBtnText: "ログイン"
+  authBtnText: "ログイン",
 };
 
 export default function Home() {
   return (
-    <Authenticate {...text}/>
+    <>
+      <Head>
+        <title>ログイン</title>
+      </Head>
+      <Authenticate {...text} />
+    </>
   );
 }

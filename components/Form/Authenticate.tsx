@@ -12,7 +12,7 @@ export default function Authenticate(texts: AuthText) {
   return (
     <div className="min-h-screen w-full bg-gray-100 px-4 py-16 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center">
-        <div className="mt-16 w-full rounded bg-white p-10 shadow dark:bg-gray-700 md:w-1/2 lg:w-1/3">
+        <div className="mt-16 w-full rounded-lg bg-white p-10 shadow dark:bg-gray-700 md:w-1/2 lg:w-1/3">
           <p
             role="heading"
             className="text-2xl text-center font-extrabold leading-6 text-gray-800 dark:text-gray-300"
@@ -32,7 +32,7 @@ export default function Authenticate(texts: AuthText) {
           <button
             aria-label="Continue with google"
             role="button"
-            className="mb-4 mt-10 flex w-full items-center rounded-lg border border-gray-700 px-4 py-3.5 hover:bg-gray-300 focus:outline-none focus:ring-4 dark:hover:bg-gray-800 focus:ring-gray-700 dark:border-gray-500 dark:focus:ring-gray-800"
+            className="mb-4 mt-10 flex w-full items-center rounded-lg border border-gray-700 px-4 py-3.5 hover:bg-gray-300 dark:hover:bg-gray-800 dark:border-gray-500"
           >
             <Icon icon="flat-color-icons:google" width={21}></Icon>
             <p className="flex-1 text-center text-base font-medium text-gray-700 dark:text-gray-300 mr-3">
@@ -42,7 +42,7 @@ export default function Authenticate(texts: AuthText) {
           <div className="flex w-full items-center justify-between py-5">
             <div className="h-0.5 w-full bg-gray-400"></div>
             <p className="break-keep px-2.5 text-base font-medium leading-4 text-gray-300">
-              または
+              あるいは
             </p>
             <div className="h-0.5 w-full bg-gray-400"></div>
           </div>
@@ -51,13 +51,13 @@ export default function Authenticate(texts: AuthText) {
               type="email"
               aria-label="enter email address"
               id="email"
-              className="peer block w-full appearance-none rounded-t-lg border-0 border-b-2 border-gray-300 bg-transparent px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
               placeholder=" "
               autoComplete="off"
             />
             <label
               htmlFor="email"
-              className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform select-none text-sm text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
+              className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform select-none text-sm text-gray-500 duration-[160ms] peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
             >
               メールアドレス
             </label>
@@ -68,13 +68,13 @@ export default function Authenticate(texts: AuthText) {
                 type={showPassword ? "text" : "password"}
                 aria-label="enter Password"
                 id="password"
-                className="peer block w-full appearance-none rounded-t-lg border-0 border-b-2 border-gray-300 bg-transparent px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
+                className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
                 placeholder=" "
                 autoComplete="off"
               />
               <label
                 htmlFor="password"
-                className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform select-none text-sm text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
+                className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform select-none text-sm text-gray-500 duration-[160ms] peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
               >
                 パスワード
               </label>
@@ -95,7 +95,7 @@ export default function Authenticate(texts: AuthText) {
           <div className="mt-8">
             <button
               role="button"
-              className="w-full text-white bg-blue-700 hover:bg-blue-400 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              className="w-full text-white bg-blue-700 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700"
             >
               {texts.authBtnText}
             </button>
