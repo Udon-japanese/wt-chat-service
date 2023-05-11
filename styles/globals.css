@@ -89,6 +89,7 @@
 .ProseMirror pre .hljs-regexp,
 .ProseMirror pre .hljs-link,
 .ProseMirror pre .hljs-selector-id,
+.ProseMirror pre .hljs-selector-attr,
 .ProseMirror pre .hljs-selector-class {
   color: #f98181;
 }

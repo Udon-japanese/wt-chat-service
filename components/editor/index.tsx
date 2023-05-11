@@ -1,5 +1,5 @@
 import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { Icon } from "@iconify/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -315,7 +315,7 @@ export default function TipTap({ channelName }: TipTapProps) {
         </div>
       </Modal>
       <div className="sticky w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700">
-        <Toolbar editor={editor} openModal={openModal}>
+        <Toolbar editor={editor} show={show} openModal={openModal}>
           <div className="relative max-h-[38rem] overflow-auto bg-white text-sm text-gray-800 dark:bg-gray-800 dark:text-white">
             <EditorContent
               editor={editor}
