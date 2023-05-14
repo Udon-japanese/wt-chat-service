@@ -23,28 +23,11 @@ export default function Home() {
               <h1 className="mb-2 truncate text-3xl font-semibold leading-tight">
                 Slack(仮)
               </h1>
-              <div className="mb-6 flex items-center">
-                <span className="mr-2 block h-2 w-2 rounded-full bg-green-500" />
-                <span className="text-sm text-white opacity-50">
-                  Adam Wathan
-                </span>
-              </div>
-            </div>
-            <div>
-              <svg
-                className="h-6 w-6 fill-current text-white opacity-25"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M14 8a4 4 0 1 0-8 0v7h8V8zM8.027 2.332A6.003 6.003 0 0 0 4 8v6l-3 2v1h18v-1l-3-2V8a6.003 6.003 0 0 0-4.027-5.668 2 2 0 1 0-3.945 0zM12 18a2 2 0 1 1-4 0h4z"
-                  fillRule="evenodd"
-                />
-              </svg>
             </div>
           </div>
           <div className="mb-8">
             <div className="mb-2 flex items-center justify-between px-4 text-white">
-              <div className="opacity-75">Channels</div>
+              <div className="opacity-75">チャンネル</div>
               <div>
                 <svg
                   className="h-4 w-4 fill-current opacity-50"
@@ -59,7 +42,7 @@ export default function Home() {
           </div>
           <div className="mb-8">
             <div className="mb-2 flex items-center justify-between px-4 text-white">
-              <div className="opacity-75">Direct Messages</div>
+              <div className="opacity-75">ダイレクトメッセージ</div>
               <div>
                 <svg
                   className="h-4 w-4 fill-current opacity-50"
@@ -73,16 +56,16 @@ export default function Home() {
             <div className="mb-3 flex items-center px-4">
               <span className="mr-2 block h-2 w-2 rounded-full bg-green-500" />
               <span className="text-white opacity-75">
-                Adam Wathan <span className="text-grey text-sm">(you)</span>
+                ダミー1 <span className="text-gray-400 text-sm">(自分)</span>
               </span>
             </div>
             <div className="mb-3 flex items-center px-4">
               <span className="mr-2 block h-2 w-2 rounded-full bg-green-500" />
-              <span className="text-white opacity-75">David Hemphill</span>
+              <span className="text-white opacity-75">ダミー2</span>
             </div>
             <div className="mb-6 flex items-center px-4 opacity-50">
               <span className="mr-2 h-2 w-2 rounded-full border border-white" />
-              <span className="text-white">Steve Schoger</span>
+              <span className="text-white">ダミー3</span>
             </div>
           </div>
           <div></div>
@@ -99,7 +82,7 @@ export default function Home() {
                 <h3 className="mb-1 font-extrabold text-white">#general</h3>
               </div>
               <div className="truncate text-sm text-white">
-                Let's start Slack!
+                全体チャンネル
               </div>
             </div>
           </div>
@@ -135,19 +118,19 @@ function renderMessage(message: Message, i: number) {
 function repeatMessage(n: number): JSX.Element[] {
   const messages: Message[] = [
     {
-      user: "マンモス",
+      user: "ダミー1",
       userIcon: "/1.png",
       postedAt: "11:46",
       messageBody: "明日はどこへ行きましょうか？",
     },
     {
-      user: "ほげ",
+      user: "ダミー2",
       userIcon: "/2.png",
       postedAt: "11:46",
       messageBody: "水族館はどうですか？",
     },
     {
-      user: "りんご",
+      user: "ダミー3",
       userIcon: "/3.png",
       postedAt: "11:46",
       messageBody: "いいですね！",
