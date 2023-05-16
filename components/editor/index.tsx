@@ -1,18 +1,22 @@
-import { useEditor, EditorContent } from "@tiptap/react";
+import {
+  useEditor,
+  EditorContent,
+  Extensions,
+  Editor as EditorType,
+} from "@tiptap/react";
 import { useCallback, useState, useEffect, useRef } from "react";
 import Toolbar from "./Toolbar";
 import { getTipTapExtensions } from "./extensions";
-import LinkModal from "./extensions/Link/LinkModal";
-import LinkBubble from "./extensions/Link/LinkBubble";
+import LinkModal from "./Toolbar/LinkButton/LinkModal";
+import ImgModal from "./Toolbar/ImgUploadButton/ImgModal";
+import { ModalFn } from "@/@types/Editor";
+import LinkBubble from "./Toolbar/LinkButton/LinkBubble";
+import { EditorProps } from "@/@types/Editor";
+import { errorToast } from "@/lib/toast/error";
 
-type TipTapProps = {
-  channelName: string;
-};
+export let openModal: ModalFn = () => {};
 
-export let openModal: () => void = () => {};
-export let handleImageKeyDown: () => void = () => {};
-
-export default function TipTap({ channelName }: TipTapProps) {
+export default function Editor({ channelName }: EditorProps) {
   const [content, setContent] = useState<string>("");
   const [cursor, setCursor] = useState<number>(0);
   const [textLength, setTextLength] = useState<number>(0);
@@ -20,11 +24,27 @@ export default function TipTap({ channelName }: TipTapProps) {
   const [show, setShow] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
   const [image, setImage] = useState<File | undefined>();
+  const [imgButtonOpen, setImgButtonOpen] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const [showImgModal, setShowImgModal] = useState<boolean>(false);
+  const [imgUrl, setImgUrl] = useState<string>("");
+
+  const openImgModal = () => {
+    setShowImgModal(true);
+  };
+
+  const closeImgModal: ModalFn = () => {
+    setShowImgModal(false);
+    setImgUrl("");
+  };
+
+  const hideImgButton: () => void = () => {
+    setImgButtonOpen(false);
+  };
 
   function readFileAsDataURL(file: File): Promise<string> {
     return new Promise(function (resolve, reject) {
-      let fr = new FileReader();
+      let fr: FileReader = new FileReader();
 
       fr.onload = function () {
         resolve(fr.result as string);
@@ -38,33 +58,34 @@ export default function TipTap({ channelName }: TipTapProps) {
     });
   }
 
-  const handleUpload = async (file: File) => {
-    const result = await readFileAsDataURL(file);
+  const handleUpload = async (file: File): Promise<string> => {
+    const result: string = await readFileAsDataURL(file);
 
     return result;
   };
 
-  handleImageKeyDown = () => {
+  const handleImageKeyDown: () => void = () => {
     imageInputRef.current?.click();
-  }
+  };
 
   useEffect(() => {
     async function handleImageUpload() {
       if (image && editor) {
-        const src = await handleUpload(image);
-        console.log({ src });
-        editor.chain().focus()?.setImage({ src })?.run();
+        const src: string = await handleUpload(image);
+        editor.chain().focus().setImage({ src }).run();
       }
     }
     handleImageUpload();
   }, [image]);
 
-  const extensions = getTipTapExtensions({
+  const extensions: Extensions = getTipTapExtensions({
     handleUpload,
     placeholder: channelName,
+    handleImageKeyDown,
+    openImgModal,
   });
 
-  const editor = useEditor({
+  const editor: EditorType | null = useEditor({
     extensions: extensions,
     content: "",
     autofocus: true,
@@ -82,6 +103,18 @@ export default function TipTap({ channelName }: TipTapProps) {
     console.log(content);
   }, [content, editor, setContent]);
 
+  const saveImageByUrl: ModalFn = useCallback(() => {
+    if (editor) {
+      console.log(imgUrl)
+      if (imgUrl && (/^(https?:\/\/)(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-]))?(\/?[^\s\/?#]+\.(jpg|jpeg|png|webp|gif|bmp|tiff|svg))(\?[^\s]+)?$/i).test(imgUrl)) {
+        editor.chain().focus().setImage({ src: imgUrl }).run();
+      } else {
+        errorToast("有効な画像URLを入力してください");
+      }
+      closeImgModal();
+    }
+  }, [editor, imgUrl]);
+
   openModal = () => {
     if (editor) {
       let { from, to } = editor.view.state.selection;
@@ -98,7 +131,7 @@ export default function TipTap({ channelName }: TipTapProps) {
       const text = editor.state.doc.textBetween(from, to, "");
       setText(text);
       setTextLength(to - from);
-      const prevUrl = editor.getAttributes("link").href;
+      const prevUrl: string = editor.getAttributes("link").href;
       if (prevUrl) {
         setUrl(prevUrl);
       }
@@ -106,21 +139,21 @@ export default function TipTap({ channelName }: TipTapProps) {
     }
   };
 
-  const closeModal: () => void = () => {
+  const closeModal: ModalFn = () => {
     setShow(false);
     setUrl("");
     setText("");
     setTextLength(0);
   };
 
-  const removeLink: () => void = useCallback(() => {
+  const removeLink: ModalFn = useCallback(() => {
     if (editor) {
       editor.chain().focus().extendMarkRange("link").unsetLink().run();
       closeModal();
     }
   }, [editor, closeModal]);
 
-  const saveLink: () => void = useCallback(() => {
+  const saveLink: ModalFn = useCallback(() => {
     if (editor) {
       if (url) {
         const { view } = editor;
@@ -155,7 +188,6 @@ export default function TipTap({ channelName }: TipTapProps) {
             .focus()
             .insertContent(tmpUrl || text)
             .setTextSelection({ from, to: modifiedTo })
-            .focus()
             .extendMarkRange("link")
             .setLink({ href: newUrl || url })
             .run();
@@ -168,7 +200,6 @@ export default function TipTap({ channelName }: TipTapProps) {
             .focus()
             .insertContent(tmpUrl || text)
             .setTextSelection({ from, to })
-            .focus()
             .extendMarkRange("link")
             .setLink({ href: newUrl || url })
             .run();
@@ -191,7 +222,13 @@ export default function TipTap({ channelName }: TipTapProps) {
   if (!editor) return null;
 
   return (
-    <>
+    <div
+      onClick={() => {
+        if (imgButtonOpen) {
+          setImgButtonOpen(false);
+        }
+      }}
+    >
       <LinkModal
         show={show}
         text={text}
@@ -201,8 +238,24 @@ export default function TipTap({ channelName }: TipTapProps) {
         closeModal={closeModal}
         saveLink={saveLink}
       />
-      <div className="sticky w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700">
-        <Toolbar editor={editor} openModal={openModal} setImage={setImage} imageInputRef={imageInputRef}>
+      <ImgModal
+        showImgModal={showImgModal}
+        closeModal={closeImgModal}
+        imgUrl={imgUrl}
+        setImgUrl={setImgUrl}
+        saveImage={saveImageByUrl}
+      />
+      <div className="w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700">
+        <Toolbar
+          editor={editor}
+          openModal={openModal}
+          setImage={setImage}
+          imageInputRef={imageInputRef}
+          imgButtonOpen={imgButtonOpen}
+          setImgButtonOpen={setImgButtonOpen}
+          hideImgButton={hideImgButton}
+          openImgModal={openImgModal}
+        >
           <div className="editor max-h-[38rem] bg-white text-sm text-gray-800 dark:bg-gray-800 dark:text-white">
             <EditorContent
               editor={editor}
@@ -216,6 +269,6 @@ export default function TipTap({ channelName }: TipTapProps) {
         openModal={openModal}
         removeLink={removeLink}
       />
-    </>
+    </div>
   );
 }

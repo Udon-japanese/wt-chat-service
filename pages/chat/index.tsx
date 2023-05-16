@@ -1,8 +1,7 @@
 import { Icon } from "@iconify/react";
 import Head from "next/head";
-import { Message } from "@/@types/Auth/Text/Message/Message";
-import TipTap from "@/components/editor";
-import { useState } from "react";
+import { Message } from "@/@types/Text/Message";
+import Editor from "@/components/editor";
 
 export default function Home() {
   return (
@@ -90,7 +89,7 @@ export default function Home() {
             {repeatMessage(3)}
           </div>
           <div className="flex-none bg-gray-800 px-4 pb-4">
-            <TipTap channelName="general" />
+            <Editor channelName="general" />
           </div>
         </div>
       </div>

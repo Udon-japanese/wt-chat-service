@@ -21,7 +21,11 @@ declare module "@tiptap/core" {
 
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/;
 
-export const CustomImage = (uploadFn: UploadFn, handleImageKeyDown: () => void) => {
+export const CustomImage = (
+  uploadFn: UploadFn,
+  handleImageKeyDown: () => void,
+  openImgModal: () => void
+) => {
   return Node.create<ImageOptions>({
     name: "image",
     addOptions() {
@@ -35,6 +39,11 @@ export const CustomImage = (uploadFn: UploadFn, handleImageKeyDown: () => void) 
       return {
         "Mod-u": () => {
           handleImageKeyDown();
+          return true;
+        },
+        "Mod-m": () => {
+          console.log(openImgModal)
+          openImgModal();
           return true;
         },
       };
@@ -81,6 +90,7 @@ export const CustomImage = (uploadFn: UploadFn, handleImageKeyDown: () => void) 
     ],
     addCommands() {
       return {
+        ...this.parent?.(),
         setImage:
           (attrs) =>
           ({ state, dispatch }) => {

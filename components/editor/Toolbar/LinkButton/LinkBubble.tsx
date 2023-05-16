@@ -1,11 +1,7 @@
 import { Editor } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/react";
-
-type LinkBubbleProps = {
-  editor: Editor;
-  openModal: () => void;
-  removeLink: () => void;
-};
+import { ModalFn } from "@/@types/Editor";
+import { LinkBubbleProps } from "@/@types/Editor";
 
 export default function LinkBubble({
   editor,
@@ -18,6 +14,7 @@ export default function LinkBubble({
       editor={editor}
       tippyOptions={{ duration: 150 }}
       shouldShow={({ editor, from, to }) => {
+        // 2文字以上でテキストを選択していない(カーソルがある)または一文字の場合表示
         return (from === to || to - from === 1) && editor.isActive("link");
       }}
     >

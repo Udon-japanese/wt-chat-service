@@ -1,4 +1,4 @@
-import type { AuthText } from "@/@types/Auth/Text/Auth/AuthText";
+import type { AuthText } from "@/@types/Text/AuthText";
 import Authenticate from "@/components/Form/Authenticate";
 import Head from "next/head";
 

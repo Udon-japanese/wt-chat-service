@@ -1,5 +1,5 @@
 import { Plugin } from "@tiptap/pm/state";
-import { toast, Slide } from "react-toastify";
+import { errorToast } from "@/lib/toast/error";
 
 export type UploadFn = (image: File) => Promise<string>;
 
@@ -7,20 +7,13 @@ export const uploadImagePlugin = (upload: UploadFn) => {
   return new Plugin({
     props: {
       handlePaste(view, event) {
-        console.log("----onhandlePaste image---");
-
         const items = Array.from(event.clipboardData?.items || []);
         const { schema } = view.state;
-
-        console.log({ items });
 
         items.forEach((item) => {
           const image = item.getAsFile();
 
-          console.log({ image, item });
-
           if (item.type.indexOf("image") === 0) {
-            console.log("item is an image");
             event.preventDefault();
 
             if (upload && image) {
@@ -49,7 +42,6 @@ export const uploadImagePlugin = (upload: UploadFn) => {
       },
       handleDOMEvents: {
         drop(view, event) {
-          console.log("----handleDom.onDrop----");
           const hasFiles = event.dataTransfer?.files?.length;
 
           if (!hasFiles) {
@@ -78,17 +70,7 @@ export const uploadImagePlugin = (upload: UploadFn) => {
                 throw new Error("5MB以下のサイズの画像をアップロードしてください");
               }
             } catch(error: any) {
-              toast.error(`${error.message}`, {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                transition: Slide,
-              });
+              errorToast(error.message);
               return false;
             }
             const reader = new FileReader();

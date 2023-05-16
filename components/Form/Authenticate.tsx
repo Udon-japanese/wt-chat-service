@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import type { AuthText } from "@/@types/Auth/Text/Auth/AuthText";
+import type { AuthText } from "@/@types/Text/AuthText";
 
 export default function Authenticate(texts: AuthText) {
   const [showPassword, setShowPassword] = useState<boolean>(false);

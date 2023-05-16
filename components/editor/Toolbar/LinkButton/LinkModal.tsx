@@ -1,16 +1,8 @@
 import Modal from "@/components/Modal";
 import { Dispatch, SetStateAction } from "react";
 import { Icon } from "@iconify/react";
-
-type LinkModalProps = {
-  show: boolean;
-  text: string;
-  setText: Dispatch<SetStateAction<string>>;
-  url: string;
-  setUrl: Dispatch<SetStateAction<string>>;
-  closeModal: () => void;
-  saveLink: () => void;
-};
+import { ModalFn } from "@/@types/Editor";
+import { LinkModalProps } from "@/@types/Editor";
 
 export default function LinkModal({
   show,
