@@ -1,11 +1,9 @@
-import { Editor } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/react";
-import { ModalFn } from "@/@types/Editor";
 import { LinkBubbleProps } from "@/@types/Editor";
 
 export default function LinkBubble({
   editor,
-  openModal,
+  openLinkModal,
   removeLink,
 }: LinkBubbleProps) {
   return (
@@ -38,7 +36,7 @@ export default function LinkBubble({
         </div>
         <div className="flex items-center justify-end gap-x-2 px-4 py-2">
           <button
-            onClick={openModal}
+            onClick={openLinkModal}
             type="button"
             className="inline-flex items-center justify-center gap-2 truncate rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
           >

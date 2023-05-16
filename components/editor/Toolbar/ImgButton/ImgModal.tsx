@@ -4,20 +4,20 @@ import { ImgModalProps } from "@/@types/Editor";
 
 export default function ImgModal({
   showImgModal,
-  closeModal,
+  closeImgModal,
   imgUrl,
   setImgUrl,
-  saveImage,
+  saveImageByUrl,
 }: ImgModalProps) {
   return (
-    <Modal show={showImgModal} closeModal={closeModal}>
+    <Modal show={showImgModal} closeModal={closeImgModal}>
         <div className="flex max-h-full flex-col overflow-hidden rounded-xl border bg-white dark:border-gray-700 dark:bg-gray-800">
           <div className="flex items-center justify-between px-4 py-3">
             <h3 className="my-1 truncate text-2xl font-bold text-gray-800 dark:text-white">
-              リンクから画像を追加
+              リンクから画像を添付
             </h3>
             <button
-              onClick={closeModal}
+              onClick={closeImgModal}
               className="inline-flex flex-shrink-0 items-center justify-center rounded-lg bg-transparent p-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
             >
               <Icon icon="material-symbols:close" width={25} />
@@ -46,7 +46,7 @@ export default function ImgModal({
           <div className="flex items-center justify-end gap-x-2 px-4 py-3">
             <button
               type="button"
-              onClick={closeModal}
+              onClick={closeImgModal}
               className="inline-flex items-center justify-center gap-2 truncate rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
             >
               キャンセル
@@ -57,7 +57,7 @@ export default function ImgModal({
                 imgUrl ? "" : "cursor-not-allowed !bg-green-900"
               }`}
               type="button"
-              onClick={saveImage}
+              onClick={saveImageByUrl}
             >
               添付する
             </button>

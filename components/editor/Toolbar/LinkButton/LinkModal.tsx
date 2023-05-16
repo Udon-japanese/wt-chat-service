@@ -1,27 +1,25 @@
 import Modal from "@/components/Modal";
-import { Dispatch, SetStateAction } from "react";
 import { Icon } from "@iconify/react";
-import { ModalFn } from "@/@types/Editor";
 import { LinkModalProps } from "@/@types/Editor";
 
 export default function LinkModal({
-  show,
-  text,
-  setText,
-  url,
-  setUrl,
-  closeModal,
+  showLinkModal,
+  linkText,
+  handleLinkTextChange,
+  linkUrl,
+  handleLinkUrlChange,
+  closeLinkModal,
   saveLink,
 }: LinkModalProps) {
   return (
-    <Modal show={show} closeModal={closeModal}>
+    <Modal show={showLinkModal} closeModal={closeLinkModal}>
       <div className="flex max-h-full flex-col overflow-hidden rounded-xl border bg-white dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-center justify-between px-4 py-3">
           <h3 className="my-1 truncate text-2xl font-bold text-gray-800 dark:text-white">
             リンクを追加する
           </h3>
           <button
-            onClick={closeModal}
+            onClick={closeLinkModal}
             className="inline-flex flex-shrink-0 items-center justify-center rounded-lg bg-transparent p-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             <Icon icon="material-symbols:close" width={25} />
@@ -35,9 +33,9 @@ export default function LinkModal({
               className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-blue-500"
               placeholder=" "
               autoComplete="off"
-              autoFocus={text ? false : true}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
+              autoFocus={linkText ? false : true}
+              value={linkText}
+              onChange={handleLinkTextChange}
             />
             <label
               htmlFor="text"
@@ -53,9 +51,9 @@ export default function LinkModal({
               className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-blue-500"
               placeholder=" "
               autoComplete="off"
-              autoFocus={text ? true : false}
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
+              autoFocus={linkText ? true : false}
+              value={linkUrl}
+              onChange={handleLinkUrlChange}
             />
             <label
               htmlFor="url"
@@ -68,15 +66,15 @@ export default function LinkModal({
         <div className="flex items-center justify-end gap-x-2 px-4 py-3">
           <button
             type="button"
-            onClick={closeModal}
+            onClick={closeLinkModal}
             className="inline-flex items-center justify-center gap-2 truncate rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
           >
             キャンセル
           </button>
           <button
-            disabled={url ? false : true}
+            disabled={linkUrl ? false : true}
             className={`inline-flex items-center justify-center gap-2 truncate rounded-md border border-transparent bg-green-700 px-4 py-2 text-sm font-medium text-white hover:enabled:bg-green-800 dark:bg-green-600 dark:hover:enabled:bg-green-700 ${
-              url ? "" : "cursor-not-allowed !bg-green-900"
+              linkUrl ? "" : "cursor-not-allowed !bg-green-900"
             }`}
             type="button"
             onClick={saveLink}

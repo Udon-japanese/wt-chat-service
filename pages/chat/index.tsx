@@ -2,8 +2,10 @@ import { Icon } from "@iconify/react";
 import Head from "next/head";
 import { Message } from "@/@types/Text/Message";
 import Editor from "@/components/editor";
+import { useState } from "react";
 
 export default function Home() {
+  const [showImgMenu, setShowImgMenu] = useState<boolean>(false);
   return (
     <>
       <Head>
@@ -14,7 +16,14 @@ export default function Home() {
         />
       </Head>
       {/* component */}
-      <div className="flex h-screen font-sans antialiased">
+      <div
+        onClick={() => {
+          if (showImgMenu) {
+            setShowImgMenu(false);
+          }
+        }}
+        className="flex h-screen font-sans antialiased"
+      >
         {/* Sidebar / channel list */}
         <div className="hidden flex-none overflow-auto bg-gray-900 pb-6 md:block md:w-[30%] lg:w-[25%]">
           <div className="mb-2 mt-3 flex justify-between px-4 text-white">
@@ -55,7 +64,7 @@ export default function Home() {
             <div className="mb-3 flex items-center px-4">
               <span className="mr-2 block h-2 w-2 rounded-full bg-green-500" />
               <span className="text-white opacity-75">
-                ダミー1 <span className="text-gray-400 text-sm">(自分)</span>
+                ダミー1 <span className="text-sm text-gray-400">(自分)</span>
               </span>
             </div>
             <div className="mb-3 flex items-center px-4">
@@ -80,16 +89,18 @@ export default function Home() {
                 </div>
                 <h3 className="mb-1 font-extrabold text-white">#general</h3>
               </div>
-              <div className="truncate text-sm text-white">
-                全体チャンネル
-              </div>
+              <div className="truncate text-sm text-white">全体チャンネル</div>
             </div>
           </div>
           <div className="flex-1 overflow-auto bg-gray-800 px-6 py-4">
             {repeatMessage(3)}
           </div>
           <div className="flex-none bg-gray-800 px-4 pb-4">
-            <Editor channelName="general" />
+            <Editor
+              channelName="general"
+              showImgMenu={showImgMenu}
+              setShowImgMenu={setShowImgMenu}
+            />
           </div>
         </div>
       </div>

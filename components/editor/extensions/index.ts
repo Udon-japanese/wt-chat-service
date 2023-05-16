@@ -6,7 +6,7 @@ import lowlight from "./CodeBlock/highlightLangs";
 import Link from "@tiptap/extension-link";
 import { Extensions } from "@tiptap/react";
 import { CustomImage } from "./Image";
-import { openModal } from "..";
+import { openLinkModal } from "..";
 import { GetTipTapExtensions } from "@/@types/Editor";
 
 const CustomLink = Link.extend({
@@ -24,7 +24,7 @@ const CustomLink = Link.extend({
   addKeyboardShortcuts() {
     return {
       "Mod-k": () => {
-        openModal();
+        openLinkModal();
         return true;
       },
     };
@@ -49,7 +49,7 @@ const CustomBlockquote = Blockquote.extend({
 export function getTipTapExtensions({
   placeholder,
   handleUpload,
-  handleImageKeyDown,
+  handleImgKeyDown,
   openImgModal,
 }: GetTipTapExtensions): Extensions {
   const extensions: Extensions = [
@@ -85,7 +85,7 @@ export function getTipTapExtensions({
     }),
     CustomBlockquote,
     CustomLink,
-    CustomImage(handleUpload, handleImageKeyDown, openImgModal),
+    CustomImage(handleUpload, handleImgKeyDown, openImgModal),
   ];
 
   return extensions;

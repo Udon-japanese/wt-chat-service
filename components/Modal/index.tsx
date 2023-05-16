@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
 type ModalProps = {
   show: boolean;
@@ -11,6 +11,14 @@ export default function Modal({
   closeModal,
   children,
 }: ModalProps) {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  }
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown, false);
+  }, [])
   if (show) {
     return (
       <div

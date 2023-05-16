@@ -1,20 +1,20 @@
 import { FormatButtonProps } from "@/@types/Editor";
 import { isMacOS } from "@tiptap/core";
 import { Icon } from "@iconify/react";
-import { Tooltip } from "react-tooltip";
 
 export default function FormatButton({
   editor,
+  tabIndex,
   tooltipText,
   shortcutText,
   formatType,
   onClick,
   iconName,
-  open,
 }: FormatButtonProps) {
   return (
     <>
       <button
+        tabIndex={tabIndex}
         data-tooltip-id="format-button"
         data-tooltip-html={`${tooltipText}<br />${
           isMacOS() ? shortcutText.forMac : shortcutText.forWin
@@ -28,7 +28,6 @@ export default function FormatButton({
       >
         <Icon icon={iconName} width={18} />
       </button>
-    {!open && <Tooltip className="text-center" id="format-button" />}
     </>
   );
 }

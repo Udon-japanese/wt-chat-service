@@ -3,14 +3,12 @@
 @tailwind utilities;
 
 @layer components {
-  .tooltip {
-    @apply text-center text-sm whitespace-nowrap rounded bg-black px-2 py-1 text-white absolute -top-[60px] left-1/2 -translate-x-1/2 before:content-[''] before:absolute before:-translate-x-1/2 before:left-1/2 before:top-full before:border-4 before:border-transparent before:border-t-black opacity-0 group-hover:opacity-100 transition pointer-events-none;
-  }
   .link {
     @apply text-blue-600 hover:text-blue-500 visited:text-purple-500 hover:visited:text-purple-400 underline
   }
 }
 
+/* エディタのoverflow設定 */
 @media (min-height: 608px) {
   .editor {
     overflow: auto;
@@ -23,44 +21,44 @@
   }
 }
 
-/* 縦方向のスクロールバー */
+
+/* スクロールバー */
 ::-webkit-scrollbar {
   width: 10px;
   background-color: transparent;
 }
 
-/* スクロールバーの棒 */
 ::-webkit-scrollbar-thumb {
   background-color: #C0C0C0;
   border-radius: 5px;
 }
 
-/* マウスオーバーしたときのスクロールバーの棒 */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #A9A9A9;
 }
 
-/* 横方向のスクロールバー */
 ::-webkit-scrollbar-horizontal {
   height: 10px;
   background-color: transparent;
 }
 
-/* スクロールバーの棒 */
 ::-webkit-scrollbar-thumb:horizontal {
   background-color: #C0C0C0;
   border-radius: 5px;
 }
 
-/* マウスオーバーしたときの横方向のスクロールバーの棒 */
 ::-webkit-scrollbar-thumb:hover:horizontal {
   background-color: #A9A9A9;
 }
 
+
+/* エディタフォーカス時のアウトラインなし */
 .ProseMirror:focus {
   outline: none;
 }
 
+
+/* エディタのプレースホルダー */
 .ProseMirror p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
@@ -69,11 +67,15 @@
   pointer-events: none;
 }
 
+
+/* エディタのリスト */
 .ProseMirror ul,
 .ProseMirror ol {
   padding: 0 1rem;
 }
 
+
+/* エディタのコードブロック */
 .ProseMirror pre {
   background: #0d0d0d;
   border-radius: 0.5rem;
@@ -176,6 +178,8 @@
   background-color: #67060c;
 }
 
+
+/* エディタ内の画像 */
 .ProseMirror img {
   height: auto;
   max-width: 100%;

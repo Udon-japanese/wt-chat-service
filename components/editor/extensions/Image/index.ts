@@ -23,7 +23,7 @@ const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/;
 
 export const CustomImage = (
   uploadFn: UploadFn,
-  handleImageKeyDown: () => void,
+  handleImgKeyDown: () => void,
   openImgModal: () => void
 ) => {
   return Node.create<ImageOptions>({
@@ -38,11 +38,11 @@ export const CustomImage = (
     addKeyboardShortcuts() {
       return {
         "Mod-u": () => {
-          handleImageKeyDown();
+          console.log(handleImgKeyDown);
+          handleImgKeyDown();
           return true;
         },
         "Mod-m": () => {
-          console.log(openImgModal)
           openImgModal();
           return true;
         },

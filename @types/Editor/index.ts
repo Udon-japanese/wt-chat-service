@@ -1,4 +1,10 @@
-import { ReactNode, RefObject, Dispatch, SetStateAction } from "react";
+import {
+  ReactNode,
+  RefObject,
+  Dispatch,
+  SetStateAction,
+  ChangeEvent,
+} from "react";
 import { Editor } from "@tiptap/react";
 import { DropzoneInputProps } from "react-dropzone";
 import { UploadFn } from "@/components/editor/extensions/Image/uploadImage";
@@ -15,6 +21,7 @@ export type FormatButtonContainerProps = {
 
 export type FormatButtonProps = {
   editor: Editor;
+  tabIndex: number;
   tooltipText: string;
   shortcutText: {
     forMac: string;
@@ -23,64 +30,74 @@ export type FormatButtonProps = {
   formatType: string;
   onClick: (() => boolean) | (() => void);
   iconName: string;
-  open: boolean;
 };
 
-export type ImgUploadButtonProps = {
-  getRootProps: <T extends DropzoneInputProps>(props?: T | undefined) => T;
-  getInputProps: <T extends DropzoneInputProps>(props?: T | undefined) => T;
-  imageInputRef: RefObject<HTMLInputElement>;
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  hideImgButton: () => void;
-  openImgModal: ModalFn;
+export type ImgButtonProps = ImgMenuProps & {
+  toggleImgMenu: () => void;
+  tabIndex: number;
 };
+
+export type SendButtonProps = {
+  tabIndex: number;
+}
 
 export type ModalFn = () => void;
 
 export type ToolbarProps = {
   children: ReactNode;
   editor: Editor;
-  openModal: () => void;
+  tabIndex: number;
+  openLinkModal: () => void;
   setImage: Dispatch<SetStateAction<File | undefined>>;
-  imageInputRef: RefObject<HTMLInputElement>;
-  imgButtonOpen: boolean;
-  setImgButtonOpen: Dispatch<SetStateAction<boolean>>;
-  hideImgButton: () => void;
+  imgInputRef: RefObject<HTMLInputElement>;
+  showImgMenu: boolean;
+  toggleImgMenu: () => void;
+  hideImgMenu: () => void;
   openImgModal: ModalFn;
 };
 
 export type EditorProps = {
   channelName: string;
+  showImgMenu: boolean;
+  setShowImgMenu: Dispatch<SetStateAction<boolean>>;
 };
 
 export type GetTipTapExtensions = {
   placeholder: string;
   handleUpload: UploadFn;
-  handleImageKeyDown: () => void;
+  handleImgKeyDown: () => void;
   openImgModal: ModalFn;
 };
 
 export type LinkModalProps = {
-  show: boolean;
-  text: string;
-  setText: Dispatch<SetStateAction<string>>;
-  url: string;
-  setUrl: Dispatch<SetStateAction<string>>;
-  closeModal: ModalFn;
+  showLinkModal: boolean;
+  linkText: string;
+  handleLinkTextChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  linkUrl: string;
+  handleLinkUrlChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  closeLinkModal: ModalFn;
   saveLink: ModalFn;
 };
 
 export type LinkBubbleProps = {
   editor: Editor;
-  openModal: ModalFn;
+  openLinkModal: ModalFn;
   removeLink: ModalFn;
 };
 
 export type ImgModalProps = {
   showImgModal: boolean;
-  closeModal: ModalFn;
+  closeImgModal: ModalFn;
   imgUrl: string;
   setImgUrl: Dispatch<SetStateAction<string>>;
-  saveImage: ModalFn;
+  saveImageByUrl: ModalFn;
+};
+
+export type ImgMenuProps = {
+  getRootProps: <T extends DropzoneInputProps>(props?: T | undefined) => T;
+  getInputProps: <T extends DropzoneInputProps>(props?: T | undefined) => T;
+  imgInputRef: RefObject<HTMLInputElement>;
+  showImgMenu: boolean;
+  hideImgMenu: () => void;
+  openImgModal: ModalFn;
 };
