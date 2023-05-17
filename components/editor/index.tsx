@@ -4,7 +4,7 @@ import {
   Extensions,
   Editor as EditorType,
 } from "@tiptap/react";
-import { useState, useEffect, useRef, ChangeEvent } from "react";
+import { useState, useEffect, useRef } from "react";
 import Toolbar from "./Toolbar";
 import { getTipTapExtensions } from "./extensions";
 import LinkModal from "./Toolbar/LinkButton/LinkModal";
@@ -13,6 +13,7 @@ import { ModalFn } from "@/@types/Editor";
 import LinkBubble from "./Toolbar/LinkButton/LinkBubble";
 import { EditorProps } from "@/@types/Editor";
 import { errorToast } from "@/lib/toast/error";
+import { handleInputChange } from "@/@types/Form";
 
 export let openLinkModal: ModalFn = () => {};
 
@@ -46,7 +47,7 @@ export default function Editor({
   };
 
   const toggleImgMenu: () => void = () => {
-    setShowImgMenu(!showImgMenu);
+    setShowImgMenu((showImgMenu) => !showImgMenu);
   };
   const hideImgMenu: () => void = () => {
     setShowImgMenu(false);
@@ -136,11 +137,11 @@ export default function Editor({
     }
   };
 
-  const handleLinkTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleLinkTextChange: handleInputChange = (e) => {
     setLinkText(e.target.value);
   };
 
-  const handleLinkUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleLinkUrlChange: handleInputChange = (e) => {
     setLinkUrl(e.target.value);
   };
 

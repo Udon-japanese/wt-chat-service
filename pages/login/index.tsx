@@ -1,5 +1,5 @@
 import type { AuthText } from "@/@types/Text/AuthText";
-import Authenticate from "@/components/Form/Authenticate";
+import Authenticate from "@/components/AuthForm";
 import Head from "next/head";
 
 const text: AuthText = {
