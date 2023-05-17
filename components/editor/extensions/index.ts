@@ -65,15 +65,15 @@ export function getTipTapExtensions({
           class: "list-decimal",
         },
       },
-      code: {
-        HTMLAttributes: {
-          class:
-            "border border-gray-700 box-decoration-clone bg-gray-900 rounded-md text-orange-400 text-xs py-[0.07rem] px-1",
-        },
-      },
       dropcursor: {
         class: "dark:text-white",
         width: 2,
+      },
+      code: {
+        HTMLAttributes: {
+          class:
+            "border border-gray-700 box-decoration-clone bg-gray-900 rounded-md text-orange-400 text-sm py-[0.03rem] px-1",
+        },
       },
       codeBlock: false,
     }),

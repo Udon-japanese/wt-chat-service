@@ -57,6 +57,7 @@ export const CustomImage = (
     draggable: true,
     addAttributes() {
       return {
+        ...this.parent?.(),
         src: {
           default: null,
         },

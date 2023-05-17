@@ -39,8 +39,10 @@ export default function Editor({
   };
 
   const closeImgModal: ModalFn = () => {
+    if (!editor) return;
     setShowImgModal(false);
     setImgUrl("");
+    editor.commands.focus();
   };
 
   const toggleImgMenu: () => void = () => {
@@ -167,10 +169,12 @@ export default function Editor({
   };
 
   const closeLinkModal: ModalFn = () => {
+    if (!editor) return;
     setShowLinkModal(false);
     setLinkUrl("");
     setLinkText("");
     setTextLength(0);
+    editor.commands.focus();
   };
 
   const removeLink: ModalFn = () => {

@@ -14,7 +14,7 @@ export default function ImgModal({
         <div className="flex max-h-full flex-col overflow-hidden rounded-xl border bg-white dark:border-gray-700 dark:bg-gray-800">
           <div className="flex items-center justify-between px-4 py-3">
             <h3 className="my-1 truncate text-2xl font-bold text-gray-800 dark:text-white">
-              リンクから画像を添付
+              URLから画像を添付
             </h3>
             <button
               onClick={closeImgModal}
