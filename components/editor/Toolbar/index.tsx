@@ -29,13 +29,14 @@ export default function Toolbar({
 
     try {
       setIsSubmitting(true);
+      if (!image) {
+        throw new Error("画像ファイルのみアップロードできます");
+      }
 
-      if (image) {
-        if (image.size >= 5000000) {
-          throw new Error("5MB以下のサイズの画像をアップロードしてください");
-        } else {
-          setImage(image);
-        }
+      if (image.size >= 5000000) {
+        throw new Error("5MB以下のサイズの画像をアップロードしてください");
+      } else {
+        setImage(image);
       }
 
       setIsSubmitting(false);

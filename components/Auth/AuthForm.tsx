@@ -1,15 +1,20 @@
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useState, useEffect, useRef } from "react";
-import type { AuthText } from "@/@types/Text/AuthText";
 import { handleInputChange, handleSubmit } from "@/@types/Form";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { FirebaseError } from "@firebase/util";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { errorToast, successToast } from "@/lib/toast/error";
+import { firebaseAuthError } from "@/lib/firebase/firebase";
 
-export default function Authenticate(texts: AuthText) {
+export default function Authenticate() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const emailInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -29,21 +34,30 @@ export default function Authenticate(texts: AuthText) {
   };
 
   const handleSubmit: handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const auth = getAuth();
-      const userCredentials = await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password,
-      )
-      await sendEmailVerification(userCredentials.user);
+        password
+      );
+      await sendEmailVerification(userCredential.user);
       setEmail("");
       setPassword("");
-    } catch (e) {
-      if (e instanceof FirebaseError) {
-        alert(e);
-      }
+      successToast(
+        <p>
+          確認メールを送信しました。
+          <br />
+          メールをご確認ください。
+        </p>
+      );
+    } catch (e: any) {
+      const errMessage = firebaseAuthError(e, "signup");
+      if (errMessage) errorToast(errMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,31 +66,31 @@ export default function Authenticate(texts: AuthText) {
       <div className="flex flex-col items-center justify-center">
         <div className="mt-16 w-full rounded-lg border border-gray-400 bg-white p-10 dark:border-gray-500 dark:bg-gray-700 md:w-1/2 lg:w-1/3">
           <p className="truncate text-center text-2xl font-extrabold leading-6 text-gray-800 dark:text-gray-300">
-            {texts.head}
+            サインアップ
           </p>
-          <div className="truncate text-sm font-medium leading-none">
+          <div className="text-sm font-medium leading-none">
             <div className="mt-7 flex items-center justify-center">
-              <p className="mb-1 text-gray-500 dark:text-gray-300">
-                {texts.subhead.p}&nbsp;
+              <p className="mb-1 truncate text-gray-500 dark:text-gray-300">
+                既にアカウントをお持ちですか？
               </p>
             </div>
             <div className="flex items-center justify-center">
               <Link
-                className="cursor-pointer rounded px-1 py-1.5 text-blue-600 no-underline hover:bg-blue-400 hover:bg-opacity-10 dark:text-blue-500"
-                href={texts.subhead.link.href}
+                className="cursor-pointer truncate rounded px-1 py-1.5 text-blue-600 no-underline hover:bg-blue-400 hover:bg-opacity-10 dark:text-blue-500"
+                href="/signin"
               >
-                {texts.subhead.link.text}
+                こちらでサインイン
               </Link>
             </div>
           </div>
           <button
             aria-label="Continue with google"
             type="button"
-            className="mb-4 mt-10 flex w-full items-center rounded-lg border border-gray-700 px-4 py-3.5 hover:bg-gray-300 dark:border-gray-500 dark:hover:bg-gray-800"
+            className="mb-4 mt-7 flex w-full items-center rounded-lg border border-gray-700 px-4 py-3.5 hover:bg-gray-300 dark:border-gray-500 dark:hover:bg-gray-800"
           >
             <Icon icon="flat-color-icons:google" width={21}></Icon>
             <p className="mr-3 flex-1 truncate text-center text-base font-medium text-gray-700 dark:text-gray-300">
-              Google で{texts.googleText}
+              Google でサインアップ
             </p>
           </button>
           <div className="flex w-full items-center justify-between py-5">
@@ -140,9 +154,20 @@ export default function Authenticate(texts: AuthText) {
           <div className="mt-8">
             <button
               type="submit"
-              className="mb-2 mr-2 w-full truncate rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700"
+              disabled={loading ? true : false}
+              className={`flex items-center justify-center mb-2 mr-2 w-full truncate rounded-lg px-5 py-2.5 text-sm font-medium text-white enabled:hover:bg-blue-400 enabled:dark:hover:bg-blue-700 ${loading ? "cursor-not-allowed bg-blue-800" : "bg-blue-700 dark:bg-blue-600"}`}
             >
-              {texts.authBtnText}
+              {loading ? (
+                <div
+                  className="h-5 w-5 animate-spin rounded-full border-[3px] border-current border-t-transparent text-white"
+                  role="status"
+                  aria-label="loading"
+                >
+                  <span className="sr-only">Loading...</span>
+                </div>
+              ) : (
+                "サインアップ"
+              )}
             </button>
           </div>
         </div>

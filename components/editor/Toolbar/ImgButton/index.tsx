@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { Tooltip } from "react-tooltip";
 import { ImgButtonProps } from "@/@types/Editor";
-import ImgMenu from "./imgMenu";
+import ImgMenu from "./ImgMenu";
 
 export default function ImgButton({
   getInputProps,

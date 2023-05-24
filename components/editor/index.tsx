@@ -4,7 +4,7 @@ import {
   Extensions,
   Editor as EditorType,
 } from "@tiptap/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import Toolbar from "./Toolbar";
 import { getTipTapExtensions } from "./extensions";
 import LinkModal from "./Toolbar/LinkButton/LinkModal";
@@ -36,6 +36,7 @@ export default function Editor({
   const tabIndexWhenModalOpen: 0 | -1 = showLinkModal || showImgModal ? -1 : 0;
 
   const openImgModal = () => {
+    hideImgMenu();
     setShowImgModal(true);
   };
 
@@ -71,7 +72,6 @@ export default function Editor({
 
   const handleUpload = async (file: File): Promise<string> => {
     const result: string = await readFileAsDataURL(file);
-
     return result;
   };
 

@@ -38,7 +38,6 @@ export const CustomImage = (
     addKeyboardShortcuts() {
       return {
         "Mod-u": () => {
-          console.log(handleImgKeyDown);
           handleImgKeyDown();
           return true;
         },

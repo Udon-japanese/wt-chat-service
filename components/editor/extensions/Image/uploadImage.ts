@@ -53,6 +53,7 @@ export const uploadImagePlugin = (upload: UploadFn) => {
           );
 
           if (images.length === 0) {
+            errorToast("画像ファイルのみアップロードできます");
             return false;
           }
 

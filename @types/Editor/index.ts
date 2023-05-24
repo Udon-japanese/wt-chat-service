@@ -4,6 +4,7 @@ import {
   Dispatch,
   SetStateAction,
   ChangeEvent,
+  MouseEvent,
 } from "react";
 import { Editor } from "@tiptap/react";
 import { DropzoneInputProps } from "react-dropzone";

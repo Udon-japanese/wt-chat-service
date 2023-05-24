@@ -12,11 +12,10 @@ export default function ImgMenu({
 }: ImgMenuProps) {
   return (
     <div
-      className={`relative ${showImgMenu ? "block" : "hidden"}`}
       onClick={(e) => e.stopPropagation()}
+      className={`relative ${showImgMenu ? "block" : "hidden"}`}
     >
       <div
-        onClick={hideImgMenu}
         className="z-15 absolute -top-[90px] flex flex-col rounded-xl border bg-white p-2 dark:border-gray-600 dark:bg-gray-800"
       >
         <button
