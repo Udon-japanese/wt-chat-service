@@ -16,7 +16,7 @@ export default function ImgMenu({
       className={`relative ${showImgMenu ? "block" : "hidden"}`}
     >
       <div
-        className="z-15 absolute -top-[90px] flex flex-col rounded-xl border bg-white p-2 dark:border-gray-600 dark:bg-gray-800"
+        className="z-15 absolute -top-[90px] flex flex-col rounded-xl border bg-white py-2 dark:border-gray-600 dark:bg-gray-800"
       >
         <button
           onClick={openImgModal}

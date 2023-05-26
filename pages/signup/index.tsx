@@ -137,7 +137,7 @@ export default function Home() {
                 サインアップ
               </p>
               <div className="text-sm font-medium leading-none">
-                <div className="mt-7 flex items-center justify-center">
+                <div className="mt-1 flex items-center justify-center">
                   <span className="mr-1 truncate text-gray-500 dark:text-gray-300">
                     アカウントをお持ちですか？
                   </span>
