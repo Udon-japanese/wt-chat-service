@@ -18,7 +18,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         setUser({
           user,
         });
-        console.log(user?.providerData)
       });
     } catch (err) {
       setUser(initialState);

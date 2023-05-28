@@ -18,7 +18,8 @@ export default function Modal({
   }
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown, false);
-  }, [])
+  }, []);
+
   if (show) {
     return (
       <div

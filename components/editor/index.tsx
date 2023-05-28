@@ -9,7 +9,7 @@ import Toolbar from "./Toolbar";
 import { getTipTapExtensions } from "./extensions";
 import LinkModal from "./Toolbar/LinkButton/LinkModal";
 import ImgModal from "./Toolbar/ImgButton/ImgModal";
-import { ModalFn } from "@/@types/Editor";
+import { ModalFn } from "@/@types/Modal";
 import LinkBubble from "./Toolbar/LinkButton/LinkBubble";
 import { EditorProps } from "@/@types/Editor";
 import { errorToast } from "@/lib/toast/error";

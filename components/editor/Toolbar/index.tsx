@@ -33,7 +33,7 @@ export default function Toolbar({
         throw new Error("画像ファイルのみアップロードできます");
       }
 
-      if (image.size >= 5000000) {
+      if (image.size > 5000000) {
         throw new Error("5MB以下のサイズの画像をアップロードしてください");
       } else {
         setImage(image);
@@ -49,7 +49,7 @@ export default function Toolbar({
   const { getInputProps, getRootProps } = useDropzone({
     multiple: false,
     accept: {
-      "image/*": [".jpg", ".png", ".jpeg", ".webp", ".gif"],
+      "image/*": [],
     },
     disabled: isSubmitting,
     onDrop: onDropImage,

@@ -4,9 +4,9 @@ import {
   Dispatch,
   SetStateAction,
   ChangeEvent,
-  MouseEvent,
 } from "react";
 import { Editor } from "@tiptap/react";
+import { ModalFn } from "../Modal";
 import { DropzoneInputProps } from "react-dropzone";
 import { UploadFn } from "@/components/editor/extensions/Image/uploadImage";
 
@@ -41,8 +41,6 @@ export type ImgButtonProps = ImgMenuProps & {
 export type SendButtonProps = {
   tabIndex: number;
 }
-
-export type ModalFn = () => void;
 
 export type ToolbarProps = {
   children: ReactNode;

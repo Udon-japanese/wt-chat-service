@@ -20,14 +20,14 @@ export default function ImgMenu({
       >
         <button
           onClick={openImgModal}
-          className="mx-1 flex items-center break-keep py-[0.12rem] hover:bg-blue-500 dark:text-white"
+          className="flex items-center break-keep py-[0.12rem] hover:bg-blue-500 dark:text-white"
         >
           <Icon icon="mdi:link-variant" className="mr-1" width={18} />
           リンクから画像を添付&nbsp;{isMacOS() ? "⌘+M" : "Ctrl+M"}
         </button>
         <div
           onClick={hideImgMenu}
-          className="mx-1 cursor-pointer break-keep py-[0.12rem] hover:bg-blue-500 dark:text-white"
+          className="cursor-pointer break-keep py-[0.12rem] hover:bg-blue-500 dark:text-white"
         >
           <div className="flex items-center" {...getRootProps()}>
             <Icon icon="ic:outline-image" className="mr-1" width={18} />

@@ -8,6 +8,7 @@
   }
 }
 
+
 /* エディタのoverflow設定 */
 @media (min-height: 608px) {
   .editor {
@@ -22,9 +23,23 @@
 }
 
 
+/* ブラウザのオートコンプリートによる背景色変更 */
+@media (prefers-color-scheme: dark) {
+  input:autofill {
+    -webkit-text-fill-color: white !important;
+  }
+}
+
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #111827;
+}
+
+
 /* スクロールバー */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
   background-color: transparent;
 }
 
@@ -34,20 +49,6 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #A9A9A9;
-}
-
-::-webkit-scrollbar-horizontal {
-  height: 10px;
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb:horizontal {
-  background-color: #C0C0C0;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover:horizontal {
   background-color: #A9A9A9;
 }
 

@@ -67,7 +67,7 @@ export const uploadImagePlugin = (upload: UploadFn) => {
 
           images.forEach(async (image) => {
             try {
-              if (image.size >= 5000000) {
+              if (image.size > 5000000) {
                 throw new Error("5MB以下のサイズの画像をアップロードしてください");
               }
             } catch(error: any) {
