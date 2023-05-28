@@ -1,6 +1,7 @@
 import { User } from "firebase/auth"
-import { ReactNode, Dispatch, SetStateAction } from "react";
+import { ReactNode, Dispatch, SetStateAction, RefObject } from "react";
 import { handleSubmit, handleInputChange } from "../Form";
+import { ModalFn } from "../Modal";
 
 // undefined: 初期値, null: 未認証, User: 認証済
 export type GlobalAuthState = {
@@ -23,7 +24,7 @@ export type DeleteIconModalProps = {
 }
 
 export type ProfileSettingProps = {
-  gettingGoogleInfo: boolean;
+  doneEPAuth: boolean;
 }
 
 export type AuthFormText = {
@@ -56,6 +57,7 @@ export type AuthFormProps = {
   password: string;
   handlePasswordChange: handleInputChange;
   submitting: boolean;
+  submitBtnRef: RefObject<HTMLButtonElement>
 }
 
 export type SignUpProps = {
@@ -65,3 +67,12 @@ export type SignUpProps = {
 }
 
 export type SignInProps = SignUpProps;
+
+export type ProfileSettingFormProps = {
+  userIcon: File | null;
+  setUserIcon: Dispatch<SetStateAction<File | null>>;
+  iconURL: string;
+  setIconURL: Dispatch<SetStateAction<string>>;
+  openIconModal: ModalFn;
+  fileInputRef: RefObject<HTMLInputElement>;
+}

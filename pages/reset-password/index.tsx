@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { handleInputChange, handleSubmit } from "@/@types/Form";
 import {
@@ -8,13 +9,15 @@ import {
   ActionCodeSettings,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { errorToast, successToast } from "@/lib/toast/error";
+import { errorToast, successToast } from "@/lib/toast";
 import { firebaseAuthError } from "@/lib/firebase/firebase";
 
 export default function Home() {
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const emailInputRef = useRef<HTMLInputElement>(null);
+
+  const { push } = useRouter();
 
   useEffect(() => {
     emailInputRef.current?.focus();
@@ -41,6 +44,7 @@ export default function Home() {
       await sendPasswordResetEmail(auth, email, actionCodeSettings);
       setEmail("");
       successToast("パスワード再設定用メールを送信しました。ご確認ください");
+      push("/signin");
     } catch (err: any) {
       let errMessage: string | null = null;
       if (err instanceof FirebaseError) {
@@ -68,8 +72,8 @@ export default function Home() {
             <p className="truncate text-center text-2xl font-extrabold leading-6 text-gray-800 dark:text-gray-300">
               パスワードをリセット
             </p>
-            <div className="mb-4 text-sm font-medium leading-none">
-              <div className="mt-7 flex items-center justify-center truncate">
+            <div className="mb-4 mt-2 text-sm font-medium leading-none">
+              <div className="flex items-center justify-center truncate">
                 <span className="mr-1 text-gray-500 dark:text-gray-300">
                   既にアカウントをお持ちですか？
                 </span>
@@ -89,13 +93,13 @@ export default function Home() {
                 type="email"
                 aria-label="enter email address"
                 id="email"
-                className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
+                className="peer block w-full appearance-none rounded-md border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-500 dark:text-white dark:focus:border-blue-500"
                 placeholder=" "
                 autoComplete="off"
               />
               <label
                 htmlFor="email"
-                className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform select-none text-sm text-gray-500 duration-[160ms] peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
+                className="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-[160ms] peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-700 dark:text-gray-400 peer-focus:dark:text-blue-500"
               >
                 メールアドレス
               </label>

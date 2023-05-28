@@ -21,6 +21,6 @@ export default function Home() {
       />
     );
   } else {
-    return <ProfileSetting gettingGoogleInfo={gettingGoogleInfo} />;
+    return <ProfileSetting doneEPAuth={doneEPAuth} />;
   }
 }
