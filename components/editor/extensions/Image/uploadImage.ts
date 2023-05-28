@@ -1,5 +1,5 @@
 import { Plugin } from "@tiptap/pm/state";
-import { errorToast } from "@/lib/toast/error";
+import { errorToast } from "@/lib/toast";
 
 export type UploadFn = (image: File) => Promise<string>;
 

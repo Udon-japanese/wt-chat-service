@@ -16,5 +16,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     return null;
   }
 
+  if (user && !user.photoURL && !user.displayName) {
+    push("/signin");
+  }
+
   return <>{children}</>;
 }

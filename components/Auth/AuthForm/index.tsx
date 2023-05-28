@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { firebaseAuthError } from "@/lib/firebase/firebase";
-import { errorToast, successToast } from "@/lib/toast/error";
+import { errorToast, successToast } from "@/lib/toast";
 import { AuthFormProps } from "@/@types/Auth";
 
 export default function AuthForm({
@@ -25,6 +25,7 @@ export default function AuthForm({
   password,
   handlePasswordChange,
   submitting,
+  submitBtnRef,
 }: AuthFormProps) {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -127,6 +128,7 @@ export default function AuthForm({
                 className="peer block w-full appearance-none rounded-md border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-500 dark:text-white dark:focus:border-blue-500"
                 placeholder=" "
                 required
+                
               />
               <label
                 htmlFor="email"
@@ -145,6 +147,7 @@ export default function AuthForm({
                 className="peer block w-full appearance-none rounded-md border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-500 dark:text-white dark:focus:border-blue-500"
                 placeholder=" "
                 required
+                autoComplete="off"
               />
               <label
                 htmlFor="password"
@@ -181,6 +184,7 @@ export default function AuthForm({
             <div className="mt-8">
               <button
                 type="submit"
+                ref={submitBtnRef}
                 disabled={submitting ? true : false}
                 className={`flex w-full items-center justify-center truncate rounded-lg px-5 py-2.5 text-sm font-medium text-white enabled:hover:bg-blue-400 enabled:dark:hover:bg-blue-700 ${
                   submitting

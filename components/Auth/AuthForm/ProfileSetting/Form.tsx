@@ -1,35 +1,30 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Tooltip } from "react-tooltip";
-import { Icon } from "@iconify/react";
 import { useState, useEffect, useRef } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, uploadBytes, getDownloadURL, ref } from "firebase/storage";
-import DeleteIconModal from "./DeleteIconModal";
-import { handleSubmit, handleInputChange } from "@/@types/Form";
-import { ModalFn } from "@/@types/Modal";
-import { useAuthContext } from "../AuthProvider";
-import { errorToast, successToast } from "@/lib/toast/error";
-import { ProfileSettingProps } from "@/@types/Auth";
+import { Icon } from "@iconify/react";
+import { ProfileSettingFormProps } from "@/@types/Auth";
+import { successToast ,errorToast } from "@/lib/toast";
+import { handleInputChange, handleSubmit } from "@/@types/Form";
+import { useAuthContext } from "../../AuthProvider";
 
-export default function ProfileSetting({
-  gettingGoogleInfo,
-}: ProfileSettingProps) {
-  const { user } = useAuthContext();
-  const { push } = useRouter();
-  const [userIcon, setUserIcon] = useState<File | null>(null);
-  const [iconURL, setIconURL] = useState<string>("");
+export default function ProfileSettingForm({
+  userIcon,
+  setUserIcon,
+  iconURL,
+  setIconURL,
+  openIconModal,
+  fileInputRef,
+}: ProfileSettingFormProps) {
+  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [displayName, setDisplayName] = useState<string>("");
-  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
-  const [showIconModal, setShowIconModal] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const emailInputRef = useRef<HTMLInputElement>(null);
+  const submitBtnRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    emailInputRef.current?.focus();
-  }, [gettingGoogleInfo]);
+  const { user } = useAuthContext();
+  const { push } = useRouter();
 
   useEffect(() => {
     if (displayName.length >= 80) {
@@ -65,25 +60,9 @@ export default function ProfileSetting({
     if (files && files.length > 0) setUserIcon(files[0]);
   };
 
-  const deleteUserIcon: () => void = () => {
-    closeIconModal();
-    setUserIcon(null);
-    if (fileInputRef.current?.value) {
-      fileInputRef.current.value = "";
-    }
-    setIconURL("");
-  };
-
-  const openIconModal: ModalFn = () => {
-    setShowIconModal(true);
-  };
-
-  const closeIconModal: ModalFn = () => {
-    setShowIconModal(false);
-  };
-
   const handleSubmit: handleSubmit = (e) => {
     e.preventDefault();
+    submitBtnRef.current?.blur();
     setSubmitting(true);
     if (user === null) {
       errorToast("セッションの有効期限が切れました。サインインしてください");
@@ -93,6 +72,7 @@ export default function ProfileSetting({
     const trimmedName = displayName.trim();
     if (!trimmedName) {
       errorToast("名前を空白(スペース)のみにすることはできません");
+      setSubmitting(false);
       return;
     }
     if (!user) return;
@@ -261,6 +241,7 @@ export default function ProfileSetting({
             <div className="mt-8">
               <button
                 type="submit"
+                ref={submitBtnRef}
                 disabled={submitting || isMaxLength ? true : false}
                 className={`flex w-full items-center justify-center truncate rounded-lg px-5 py-2.5 text-sm font-medium text-white enabled:hover:bg-blue-400 enabled:dark:hover:bg-blue-700 ${
                   submitting || isMaxLength
@@ -284,13 +265,6 @@ export default function ProfileSetting({
           </div>
         </div>
       </form>
-      <DeleteIconModal
-        showIconModal={showIconModal}
-        deleteUserIcon={deleteUserIcon}
-        closeIconModal={closeIconModal}
-        iconURL={iconURL}
-      />
-      <Tooltip id="delete-image" />
     </>
   );
 }

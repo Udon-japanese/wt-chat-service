@@ -1,5 +1,5 @@
 import AuthForm from "..";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { firebaseAuthError } from "@/lib/firebase/firebase";
-import { successToast, errorToast } from "@/lib/toast/error";
+import { successToast, errorToast } from "@/lib/toast";
 import { handleInputChange, handleSubmit } from "@/@types/Form";
 import { SignUpProps, AuthFormText } from "@/@types/Auth";
 
@@ -19,6 +19,7 @@ export default function SignUp({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const submitBtnRef = useRef<HTMLButtonElement>(null);
 
   const authFormText: AuthFormText = {
     head: "サインアップ",
@@ -45,6 +46,7 @@ export default function SignUp({
     setDoneEPAuth(false);
     setSubmitting(true);
     e.preventDefault();
+    submitBtnRef.current?.blur();
     try {
       const doubleByteRegex: RegExp = /[^\x00-\x7F]/g;
       if (doubleByteRegex.test(email) || doubleByteRegex.test(password)) {
@@ -89,6 +91,7 @@ export default function SignUp({
       password={password}
       handlePasswordChange={handlePasswordChange}
       submitting={submitting}
+      submitBtnRef={submitBtnRef}
     />
   );
 }

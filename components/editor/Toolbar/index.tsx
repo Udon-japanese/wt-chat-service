@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { errorToast } from "@/lib/toast/error";
+import { errorToast } from "@/lib/toast";
 import { useDropzone } from "react-dropzone";
 import { ToolbarProps } from "@/@types/Editor";
 import { Tooltip } from "react-tooltip";
