@@ -6,16 +6,12 @@ type ModalProps = {
   children: ReactNode;
 };
 
-export default function Modal({
-  show,
-  closeModal,
-  children,
-}: ModalProps) {
+export default function Modal({ show, closeModal, children }: ModalProps) {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       closeModal();
     }
-  }
+  };
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown, false);
   }, []);

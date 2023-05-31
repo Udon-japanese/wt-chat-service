@@ -18,7 +18,7 @@ export default function ProfileSettingForm({
   openIconModal,
   fileInputRef,
 }: ProfileSettingFormProps) {
-  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
+  const [exceedsLimit, setExceedsLimit] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [displayName, setDisplayName] = useState<string>("");
   const submitBtnRef = useRef<HTMLButtonElement>(null);
@@ -27,10 +27,10 @@ export default function ProfileSettingForm({
   const { push } = useRouter();
 
   useEffect(() => {
-    if (displayName.length >= 80) {
-      setIsMaxLength(true);
+    if (displayName.length > 80) {
+      setExceedsLimit(true);
     } else {
-      setIsMaxLength(false);
+      setExceedsLimit(false);
     }
   }, [displayName]);
 
@@ -211,7 +211,7 @@ export default function ProfileSettingForm({
                 aria-label="enter display name"
                 id="display-name"
                 className={`peer block w-full appearance-none rounded-md border bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:text-white ${
-                  isMaxLength
+                  exceedsLimit
                     ? "border-red-600 dark:border-red-500"
                     : "border-gray-300 focus:border-blue-600 dark:border-gray-500 dark:focus:border-blue-500"
                 }`}
@@ -222,7 +222,7 @@ export default function ProfileSettingForm({
               <label
                 htmlFor="display-name"
                 className={`absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm duration-[160ms] peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 dark:bg-gray-700 ${
-                  isMaxLength
+                  exceedsLimit
                     ? "text-red-600 dark:text-red-500"
                     : "text-gray-500 peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
                 }`}
@@ -231,10 +231,10 @@ export default function ProfileSettingForm({
               </label>
             </div>
             <div className="flex flex-row">
-              {isMaxLength && (
+              {exceedsLimit && (
                 <p className="mt-2 flex flex-row text-sm text-red-600 dark:text-red-500">
-                  <Icon icon="carbon:warning" className="mr-1" width={18} />
-                  80文字以上入力することはできません
+                  <Icon icon="carbon:warning" className="mr-1 flex-shrink-0" width={18} />
+                  名前は80文字以下で入力してください
                 </p>
               )}
             </div>
@@ -242,9 +242,9 @@ export default function ProfileSettingForm({
               <button
                 type="submit"
                 ref={submitBtnRef}
-                disabled={submitting || isMaxLength ? true : false}
+                disabled={submitting || exceedsLimit ? true : false}
                 className={`flex w-full items-center justify-center truncate rounded-lg px-5 py-2.5 text-sm font-medium text-white enabled:hover:bg-blue-400 enabled:dark:hover:bg-blue-700 ${
-                  submitting || isMaxLength
+                  submitting || exceedsLimit
                     ? "cursor-not-allowed bg-blue-800"
                     : "bg-blue-700 dark:bg-blue-600"
                 }`}

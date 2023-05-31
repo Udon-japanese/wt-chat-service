@@ -92,7 +92,7 @@ export default function AuthForm({
                   {subP}
                 </span>
                 <Link
-                  className="cursor-pointer truncate rounded px-1 py-1.5 text-blue-600 no-underline hover:bg-blue-400 hover:bg-opacity-10 dark:text-blue-500"
+                  className="cursor-pointer truncate rounded px-1 py-1.5 text-blue-600 no-underline hover:bg-blue-400/10 dark:text-blue-500"
                   href={subLink.href}
                 >
                   {subLink.content}

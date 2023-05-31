@@ -4,7 +4,7 @@ import {
   Extensions,
   Editor as EditorType,
 } from "@tiptap/react";
-import { useState, useEffect, useRef, MouseEvent } from "react";
+import { useState, useEffect, useRef } from "react";
 import Toolbar from "./Toolbar";
 import { getTipTapExtensions } from "./extensions";
 import LinkModal from "./Toolbar/LinkButton/LinkModal";
