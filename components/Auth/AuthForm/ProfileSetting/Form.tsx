@@ -164,7 +164,7 @@ export default function ProfileSettingForm({
                 </>
               ) : (
                 <Icon
-                  icon="mingcute:user-4-fill"
+                  icon="icon-park:avatar"
                   className="default-icon"
                   width={100}
                 />

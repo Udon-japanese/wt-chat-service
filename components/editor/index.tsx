@@ -32,6 +32,7 @@ export default function Editor({
   const imgInputRef = useRef<HTMLInputElement>(null);
   const [showImgModal, setShowImgModal] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string>("");
+  const [placeholder, setPlaceholder] = useState<string>("");
 
   const tabIndexWhenModalOpen: 0 | -1 = showLinkModal || showImgModal ? -1 : 0;
 
@@ -89,15 +90,19 @@ export default function Editor({
     handleImageUpload();
   }, [image]);
 
+  useEffect(() => {
+    setPlaceholder(`#${channelName} へのメッセージ`);
+  }, [channelName]); 
+
   //Modal表示時のエディタへのtabフォーカス禁止
   useEffect(() => {
     const editorDiv = document.querySelector(".ProseMirror");
     editorDiv?.setAttribute("tabindex", tabIndexWhenModalOpen.toString());
-  }, [showLinkModal, showImgModal])
+  }, [showLinkModal, showImgModal]);
 
   const extensions: Extensions = getTipTapExtensions({
     handleUpload,
-    placeholder: channelName,
+    placeholder,
     handleImgKeyDown,
     openImgModal,
   });
@@ -119,6 +124,17 @@ export default function Editor({
     if (content === "<p></p>") setContent("");
     console.log(content);
   }, [content, editor, setContent]);
+
+  useEffect(() => {
+    if (editor && placeholder) {
+      editor.extensionManager.extensions.filter(
+        (extension) => extension.name === "placeholder"
+      )[0].options["placeholder"] = placeholder;
+      editor.view.dispatch(editor.state.tr);
+    } else {
+      setPlaceholder("メッセージを入力...");
+    }
+  }, [editor, placeholder]);
 
   const saveImageByUrl: ModalFn = () => {
     if (!editor) return;

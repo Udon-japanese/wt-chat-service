@@ -1,9 +1,10 @@
 import { Icon } from "@iconify/react";
 import { useCookies } from "react-cookie";
+import { useAuthContext } from "@/components/Auth/AuthProvider";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Message } from "@/@types/Message/Message";
-import Editor from "@/components/editor";
+import Editor from "@/components/Editor";
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import Sidebar from "@/components/Sidebar";
@@ -16,6 +17,7 @@ export default function Home() {
   const [cs, setCookie, removeCookie] = useCookies(["lastAccess"]);
   const cookies = cs as { [x: string]: string };
 
+  const { user } = useAuthContext();
   const router = useRouter();
   const { push } = router;
   const { channelId: cId } = router.query;
@@ -32,7 +34,7 @@ export default function Home() {
     if (loading) return;
     const foundChannel = channels.find((c) => c.id === channelId);
     if (foundChannel) setChannelName(foundChannel.name);
-  }, [channelId, loading])
+  }, [channelId, loading]);
 
   const hideImgMenu: () => void = () => {
     if (showImgMenu) {
@@ -47,7 +49,7 @@ export default function Home() {
           name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
-        <title>チャット - {channelName}</title>
+        <title>{`チャット${channelName ? ` - ${channelName}` : ""}`}</title>
       </Head>
       {/* component */}
       <div
@@ -59,15 +61,22 @@ export default function Home() {
         {/* Chat content */}
         <div className="flex flex-1 flex-col overflow-hidden bg-white">
           {/* Top bar */}
-          <div className="flex flex-none items-center border-b border-gray-900 bg-gray-800 px-6 py-2">
+          {/* <div className="flex flex-none items-center justify-end border-b border-gray-600 bg-gray-800 px-6 py-2">
+            <div className="flex items-center">
+              {user?.photoURL && <img src={user.photoURL} className="aspect-square h-full w-64 rounded-md object-cover" />}
+            </div>
+          </div> */}
+          <div className="flex flex-none items-center border-b border-gray-600 bg-gray-800 px-6 py-2">
             <div className="flex flex-col">
               <div className="flex items-center">
                 <button type="button" className="mr-2 text-white md:hidden">
                   <Icon icon="mdi:hamburger-menu-back" width={24} />
                 </button>
-                <h3 className="mb-1 font-extrabold text-white">#general</h3>
+                <h3 className="mb-1 font-extrabold text-white">
+                  {channelName ? `#${channelName}` : ""}
+                </h3>
               </div>
-              <div className="truncate text-sm text-white">全体チャンネル</div>
+              <div className="truncate text-sm text-white">説明</div>
             </div>
           </div>
           <div className="flex-1 overflow-auto bg-gray-800 px-6 py-4">
